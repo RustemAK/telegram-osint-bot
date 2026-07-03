@@ -1,0 +1,19 @@
+# ── Telegram OSINT Bot — runtime dependencies ────────────────────────────────
+# Pinned to lightweight, modern packages that run comfortably on
+# Oracle Cloud Free Tier (1 vCPU / 1 GB RAM, Ubuntu 24.04, Python 3.12).
+
+aiogram==3.13.1            # Async Telegram Bot framework (long polling)
+SQLAlchemy[asyncio]==2.0.35  # Async ORM
+aiosqlite==0.20.0         # Async SQLite driver (default DB)
+asyncpg==0.29.0           # Async PostgreSQL driver (optional)
+alembic==1.13.3           # Database migrations
+pydantic==2.9.2           # Data validation
+pydantic-settings==2.5.2  # .env based settings
+aiohttp==3.10.10          # Async HTTP client (OSINT sources)
+httpx==0.27.2             # Async HTTP client (alt / JSON APIs)
+structlog==24.4.0         # Structured logging
+orjson==3.10.7            # Fast JSON serialization
+uvloop==0.20.0            # Faster event loop (Linux only)
+dnspython==2.6.1          # DNS / Reverse DNS lookups
+python-whois==0.9.5       # WHOIS parsing
+reportlab==4.2.2          # PDF export (lightweight, pure-python)
