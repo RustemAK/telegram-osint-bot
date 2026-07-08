@@ -1,0 +1,11 @@
+Alembic migrations for the Telegram OSINT Bot.
+
+Generate a new revision after changing models:
+    alembic revision --autogenerate -m "describe change"
+
+Apply migrations:
+    alembic upgrade head
+
+The database URL is read automatically from your .env via migrations/env.py.
+For SQLite (the default), the bot also auto-creates tables on first run, so
+migrations are only strictly required when using PostgreSQL in production.

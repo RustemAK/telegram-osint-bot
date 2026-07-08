@@ -1,0 +1,30 @@
+[Unit]
+Description=Telegram OSINT Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Adjust User/Group and paths to match your server.
+User=osint
+Group=osint
+WorkingDirectory=/opt/osint-bot
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=/opt/osint-bot/.env
+ExecStart=/opt/osint-bot/.venv/bin/python -m bot.main
+Restart=on-failure
+RestartSec=5
+
+# ── Hardening (safe on a shared VPS) ─────────────────────────────────────────
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/opt/osint-bot
+
+# ── Resource limits for a 1 GB RAM box ───────────────────────────────────────
+MemoryMax=400M
+CPUQuota=80%
+
+[Install]
+WantedBy=multi-user.target

@@ -45,6 +45,10 @@ class QueryRepository:
         await self._session.flush()
         return entry
 
+    async def get(self, entry_id: int) -> QueryLog | None:
+        """Return a single query-log entry by id, or ``None``."""
+        return await self._session.get(QueryLog, entry_id)
+
     async def history(
         self, user_id: int, limit: int = 5, offset: int = 0
     ) -> list[QueryLog]:

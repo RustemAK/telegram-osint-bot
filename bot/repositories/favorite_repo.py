@@ -19,15 +19,20 @@ class FavoriteRepository:
     async def add(
         self, user_id: int, query: str, query_type: str, note: str | None = None
     ) -> Favorite | None:
-        """Add a favorite. Returns ``None`` if it already exists (unique)."""
+        """Add a favorite. Returns ``None`` if it already exists (unique).
+
+        The insert runs inside a SAVEPOINT so that hitting the unique
+        constraint only rolls back this statement — never the surrounding
+        transaction (which may already contain other valid changes).
+        """
         favorite = Favorite(
             user_id=user_id, query=query, query_type=query_type, note=note
         )
-        self._session.add(favorite)
         try:
-            await self._session.flush()
+            async with self._session.begin_nested():
+                self._session.add(favorite)
+                await self._session.flush()
         except IntegrityError:
-            await self._session.rollback()
             return None
         return favorite
 
